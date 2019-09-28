@@ -1,26 +1,48 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route, Switch } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './App.scss';
+import Input from './components/Input/Input';
+import VideosList from './components/VideosList/VideosList';
+import ShowVideo from './components/ShowVideo/ShowVideo';
+
+class App extends React.Component {
+  state={
+    submited: false,
+    videos: [],
+    selectedId: null,
+    selectedTitle: ''
+  }
+  
+  onSubmit = videos => {
+    this.setState({
+      submited: true,
+      videos: videos
+    })
+  }
+
+  onGetId = (selectedId, title) => {
+    this.setState({
+      selectedId: selectedId,
+      selectedTitle: title
+    })
+  }
+
+  render(){
+    return (
+      <div className="App">
+        <div className={`App-searchBar ${this.state.submited ? `App-searchBar--active` : ``}`}>
+          <Input moveInput={this.onSubmit} />
+        </div>
+        <div className={`App-container ${this.state.submited ? `App-container--active` : ``}`}>
+          <Switch>
+            <Route path={`/show/:id`} component={props => <ShowVideo {...props} selectedId={this.state.selectedId} title={this.state.selectedTitle} videosList={this.state.videos} getId={this.onGetId} />} />
+            <Route path="/" exact component={props => <VideosList {...props} videosList={this.state.videos} getId={this.onGetId} />} />
+          </Switch>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;

@@ -1,0 +1,41 @@
+@import "../../scss/variables";
+
+.ShowVideo {
+    width: 67.4em;
+    &-videoDiv {
+        background-color: $background-color-elements;
+        padding: 1em;
+        border-radius: 3px;
+        margin-bottom: 2em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 67.4em;
+    }
+    &-iframe {
+        width: 640px;
+        height: 400px;
+    }
+    &-videoTitle {
+        text-align: center;
+    }
+    &-listDiv {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+@media(min-width: 1200px) {
+    .ShowVideo {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        &-listDiv {
+            width: 60em;
+        }
+    }
+}

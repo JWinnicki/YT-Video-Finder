@@ -1,0 +1,40 @@
+@import "../../scss/variables";
+
+.Input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $background-color-elements;
+    border-radius: 3px;
+    padding: .5em;
+    width: 50em;
+    z-index: 1000;
+
+    &-input {
+         &:focus::placeholder{
+            color: transparent
+        }
+        border: none;
+        background-color: transparent;
+        font-size: 1.8em;
+        flex: 1;
+        height: 3rem;
+    }
+    &-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        height: 3rem;
+        width: 3em;
+        border: none;
+        border-radius: 3px;
+        background-color: transparent;
+
+        &:hover {
+            cursor: pointer;
+            background-color: $background-color-hovered;
+        }
+    }
+}
+

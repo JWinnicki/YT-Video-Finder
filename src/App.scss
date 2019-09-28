@@ -1,0 +1,59 @@
+@import "scss/variables";
+
+.App {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  position: relative;
+  //width: 100vw;
+  min-height: 100vh;
+  background-image: linear-gradient(to right top, $background-color-first, $background-color-second);
+  padding: 2em;
+  overflow: hidden;
+
+  &-searchBar {
+    flex: 0 0 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3em;
+    width: 100%;
+
+    transform: translateY(40vh);
+    transition: all .4s;
+
+    &--active {
+      transform: translateY(0);
+    }
+  }
+
+  &-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    z-index: -1;
+    transform: translateY(3em);
+    width: 100%;
+    min-width: 43em;
+    transition: all .5s linear .2s;
+    &--active {
+      opacity: 1;
+      z-index: 1;
+      transform: translateY(0);
+      min-height: 52.2em;
+    }
+  }
+
+
+  
+}
+
+/* @media(min-width: 1200px) {
+  .App-container {
+      width: 100%;
+  }
+} */
+
