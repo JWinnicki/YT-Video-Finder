@@ -1,63 +1,57 @@
-import React from 'react';
+import React, { useState, useContext, useEffect, useCallback } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import Icon from '../Icon/Icon';
 import './Input.scss';
 import youtube from '../../axios-yt';
 import KEY from '../../api-key.js';
+import { VideosContext } from '../../context/videos-context';
 
 
-class  Input extends React.Component {
-    state = {
-        videos: [],
-        term: ''
-    }
+const Input = React.memo(props => {
+    const [ term, setTerm ] = useState('');
+    const { setVideos } = useContext(VideosContext);
+    const { location, history } = props;
 
-    onFetchVideos = async () => {
+
+    useEffect(() => {
+        console.log('RENDERING INPUT');
+    })
+
+    const onFetchVideos = useCallback(async () => {
         const response = await youtube.get('/search',{
             params: {
-                q: this.state.term,
+                q: term,
                 key: KEY,
                 part: 'snippet',
                 maxResults: 5,
                 type: 'video'
             }
         });
-        console.log(response.data.items);
-        this.props.moveInput(response.data.items);
-        if(this.props.location.pathname !== '/' ) {
-            this.props.history.push('/');
+        //console.log(response.data.items);
+        setVideos(response.data.items);
+        if(location.pathname !== '/' ) {
+            history.push('/');
         }
-    }
+    }, [history, location, setVideos, term]);
 
-    onSubmitHandler = e => {
+    const onSubmitHandler = useCallback(e => {
         e.preventDefault();
-        if(this.state.term !== '') {
-            this.onFetchVideos();
-            this.setState({
-                term: ''
-            });
+        if(term !== '') {
+            onFetchVideos();
         }
-    }
+    }, [onFetchVideos, term])
 
-    onChangeHandler = e => {
-        this.setState({
-            term: e.target.value
-        });
-    }
-
-    render() {
-        return (
-            <form onSubmit={e => this.onSubmitHandler(e)}>
-                <div className='Input'>
-                    <input className='Input-input' type='text' placeholder='Search for video!' value={this.state.term} onChange={e => this.onChangeHandler(e)} />
-                    <button className='Input-icon' type='submit' onClick={e => this.onSubmitHandler(e)}>
-                        <Icon size='small' icon='magnifier'  />
-                    </button>
-                </div>
-            </form>
-        );
-    }
-} 
+    return (
+        <form onSubmit={e => onSubmitHandler(e)}>
+            <div className='Input'>
+                <input className='Input-input' type='text' placeholder='Search for video!' value={term} onChange={e => setTerm(e.target.value)} />
+                <button className='Input-icon' type='submit' onClick={e => onSubmitHandler(e)}>
+                    <Icon size='small' icon='magnifier'  />
+                </button>
+            </div>
+        </form>
+    );
+})
 
 export default withRouter(Input);

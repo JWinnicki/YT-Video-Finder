@@ -1,30 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import './App.scss';
 import Input from './components/Input/Input';
 import VideosList from './components/VideosList/VideosList';
 import ShowVideo from './components/ShowVideo/ShowVideo';
+import { VideosContext } from './context/videos-context';
 
-class App extends React.Component {
+/* class App extends React.Component {
   state={
-    submited: false,
-    videos: [],
-    selectedId: null,
-    selectedTitle: ''
+    submited: false
   }
   
-  onSubmit = videos => {
+  onSubmit = () => {
     this.setState({
-      submited: true,
-      videos: videos
-    })
-  }
-
-  onGetId = (selectedId, title) => {
-    this.setState({
-      selectedId: selectedId,
-      selectedTitle: title
+      submited: true
     })
   }
 
@@ -36,13 +26,32 @@ class App extends React.Component {
         </div>
         <div className={`App-container ${this.state.submited ? `App-container--active` : ``}`}>
           <Switch>
-            <Route path={`/show/:id`} component={props => <ShowVideo {...props} selectedId={this.state.selectedId} title={this.state.selectedTitle} videosList={this.state.videos} getId={this.onGetId} />} />
-            <Route path="/" exact component={props => <VideosList {...props} videosList={this.state.videos} getId={this.onGetId} />} />
+            <Route path={`/show/:id`} component={ShowVideo} />
+            <Route path="/" exact component={VideosList} />
           </Switch>
         </div>
       </div>
     );
   }
+} */
+
+const App = () => {
+  const { videos } = useContext(VideosContext);
+
+
+  return (
+    <div className="App">
+      <div className={`App-searchBar ${videos.length > 0 ? `App-searchBar--active` : ``}`}>
+        <Input />
+      </div>
+      <div className={`App-container ${videos.length > 0 ? `App-container--active` : ``}`}>
+        <Switch>
+          <Route path={`/show/:id`} component={ShowVideo} />
+          <Route path="/" exact component={VideosList} />
+        </Switch>
+      </div>
+    </div>
+  );
 }
 
 export default App;

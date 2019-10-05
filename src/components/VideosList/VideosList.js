@@ -1,30 +1,35 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import './VideosList.scss';
 import VideoItem from '../VideoItem/VideoItem';
+import { VideosContext } from '../../context/videos-context';
 
-class VideosList extends React.Component {
 
-    renderItems = () => {
-        const { videosList } = this.props;
-        if(videosList.length > 0) {
-            return videosList.map(el => {
-                return <VideoItem key={el.id.videoId} id={el.id.videoId} title={el.snippet.title} url={el.snippet.thumbnails.default.url} getId={this.props.getId} />
+const VideosList = React.memo(props => {
+    const videosContext = useContext(VideosContext);
+    const videosList = videosContext.videos;
+    const filteredList = videosList.filter(el => el.id.videoId !== videosContext.id)
+    
+    useEffect(() => {
+        console.log('RENDERING LIST');
+    })
+
+    const renderItems = () => {
+        //console.log(filteredList);
+        if(filteredList.length > 0) {
+            return filteredList.map(el => {
+                return <VideoItem key={el.id.videoId} id={el.id.videoId} title={el.snippet.title} url={el.snippet.thumbnails.default.url} />
             });
-            //console.log(videosList.snippet[0]);
         }
-    }
+    }    
 
-    render() {
-        return (
-            <div className={`VideosList`}>
-                <ul className='VideosList-list'>
-                    {this.renderItems()}
-                </ul>
-            </div>
-        );
-    } 
-}
+    return (
+        <div className={`VideosList`}>
+            <ul className='VideosList-list'>
+                {renderItems()}
+            </ul>
+        </div>
+    );
+});
 
 export default VideosList;
-// ${this.props.submited ? 'VideosList--active' : ''}

@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import './VideoItem.scss';
+import { VideosContext } from '../../context/videos-context';
 
 const VideoItem = props => {
+    const videosContext = useContext(VideosContext);
+
+    const getDetailsHandler = (id, title) => {
+        videosContext.setId(id);
+        videosContext.setTitle(title);
+    }
+
+    useEffect(() => {
+        console.log('RENDERING ITEM');
+    })
+
     return (
         <li className='VideoItem'>
-            <Link to={`/show/${props.id}`} className='VideoItem-link' onClick={() => props.getId(props.id, props.title)}>
+            <Link to={`/show/${props.id}`} className='VideoItem-link' onClick={() => getDetailsHandler(props.id, props.title)}>
                 <div className='VideoItem-imgDiv'>
                     <img alt={props.title} src={props.url} className='VideoItem-img' />
                 </div>

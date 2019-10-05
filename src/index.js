@@ -5,10 +5,14 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { HashRouter } from 'react-router-dom';
 
+import VideosContextProvider from './context/videos-context';
+
 const app = (
-    <HashRouter>
-        <App />
-    </HashRouter>
+    <VideosContextProvider>
+        <HashRouter>
+            <App />
+        </HashRouter>
+    </VideosContextProvider>
 );
 
 ReactDOM.render(app, document.getElementById('root'));

@@ -1,19 +1,20 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import './ShowVideo.scss';
 import VideosList from '../VideosList/VideosList';
+import { VideosContext } from '../../context/videos-context';
 
-class ShowVideo extends React.Component {
 
-    filterArr = () => {
-        return this.props.videosList.filter(el => {
-            return el.id.videoId !== this.props.selectedId
-        })
-    }
+const ShowVideo = React.memo(props => {
+    const videosContext = useContext(VideosContext);
 
-    renderComponent = () => {
-        if(this.props.selectedId === null || this.props.selectedId === undefined) {
+    useEffect(() => {
+        console.log('RENDERING SHOW');
+    })
+
+    const renderComponent = () => {
+        if(videosContext.id === null) {
             return <Redirect to='/' />
         } else {
             return(
@@ -21,40 +22,27 @@ class ShowVideo extends React.Component {
                     <div className='ShowVideo-videoDiv'>
                         <div className='ShowVideo-iframeDiv'>
                             <iframe 
-                                src={`https://www.youtube.com/embed/${this.props.selectedId}`}
+                                src={`https://www.youtube.com/embed/${videosContext.id}`}
                                 title='video player'
                                 allowFullScreen
                                 className='ShowVideo-iframe'
                             />
                         </div>
-                        <h2 className='ShowVideo-videoTitle'>{this.props.title}</h2>
+                        <h2 className='ShowVideo-videoTitle'>{videosContext.title}</h2>
                     </div>
                     <div className='ShowVideo-listDiv'>
-                        <VideosList videosList={this.filterArr()} getId={this.props.getId} />
+                        <VideosList />
                     </div>
                 </div>
             );
         }
     }
 
-    render() {
-        return (
-            <div>
-                {this.renderComponent()}
-            </div>
-        );
-    }
-}
+    return (
+        <div>
+            {renderComponent()}
+        </div>
+    );
+});
 
 export default ShowVideo;
-
-/* <div className='showVideo-container'>
-                    <div className=''>
-                        <iframe 
-                            src={`https://www.youtube.com/embed/${this.props.selectedId}`}
-                            title='video player'
-                            allowFullScreen
-                        />
-                    </div>
-                    <h2>{this.props.title}</h2>
-                </div> */
