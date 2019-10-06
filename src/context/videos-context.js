@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 
 export const VideosContext = React.createContext({
-    /* videos: [],
+    videos: [],
     fetchingStart: () => {},
     fetchingFailed: () => {},
     fetchingSuccess: () => {},
@@ -12,7 +12,7 @@ export const VideosContext = React.createContext({
     error: null,
     setError: () => {},
     loading: false,
-    getVideoDetails: () => {} */
+    getVideoDetails: () => {}
 });
 
 const initialState = {

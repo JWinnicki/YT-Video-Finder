@@ -8,14 +8,14 @@ import ShowVideo from './components/ShowVideo/ShowVideo';
 import { VideosContext } from './context/videos-context';
 
 const App = () => {
-  const { videos } = useContext(VideosContext);
+  const { videos, error } = useContext(VideosContext);
 
   return (
     <div className="App">
-      <div className={`App-searchBar ${videos.length > 0 ? `App-searchBar--active` : ``}`}>
+      <div className={`App-searchBar ${videos.length > 0 || error ? `App-searchBar--active` : ``}`}>
         <Input />
       </div>
-      <div className={`App-container ${videos.length > 0 ? `App-container--active` : ``}`}>
+      <div className={`App-container ${videos.length > 0 || error ? `App-container--active` : ``}`}>
         <Switch>
           <Route path={`/show/:id`} component={ShowVideo} />
           <Route path="/" exact component={VideosList} />

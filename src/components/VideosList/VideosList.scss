@@ -9,6 +9,11 @@
     &-list {
         list-style: none;
     }
+
+    &-errorMsg {
+        font-size: 1.4em;
+        text-align: center;
+    }
 }
 
 @media(min-width: 1200px) {

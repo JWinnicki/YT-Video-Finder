@@ -15,11 +15,13 @@ const VideosList = React.memo(props => {
     }) */
 
     const renderItems = () => {
-        //console.log(filteredList);
-        if(filteredList.length > 0) {
+        
+        if(filteredList.length > 0 && !videosContext.error && !videosContext.loading) {
             return filteredList.map(el => {
                 return <VideoItem key={el.id.videoId} id={el.id.videoId} title={el.snippet.title} url={el.snippet.thumbnails.default.url} />
             });
+        } else if(videosContext.error && !videosContext.loading) {
+            return <p className='VideosList-errorMsg'>{videosContext.error}</p>
         }
     }    
 
