@@ -1,37 +1,97 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 
 export const VideosContext = React.createContext({
-    videos: [],
-    setVideos: () => {},
+    /* videos: [],
+    fetchingStart: () => {},
+    fetchingFailed: () => {},
+    fetchingSuccess: () => {},
     id: null,
     setId: () => {},
     title: '',
-    setTitle: () => {}
+    setTitle: () => {},
+    error: null,
+    setError: () => {},
+    loading: false,
+    getVideoDetails: () => {} */
 });
 
+const initialState = {
+    loading: false,
+    error: null,
+    videos: [],
+    id: null,
+    title: ''
+}
+
+const videosReducer = (prevState, action) => {
+    switch(action.type) {
+        case 'FETCHING_START':
+            return {
+                ...prevState,
+                loading: true,
+                error: null
+            }
+        case 'FETCHING_FAILED':
+            return {
+                 ...prevState,
+                loading: false,
+                error: action.error
+            }
+        case 'FETCHING_SUCCESS':
+            return {
+                ...prevState,
+                loading: false,
+                videos: action.videos
+            }   
+        case 'GET_VIDEO_DETAILS':
+            return {
+                ...prevState,
+                id: action.id,
+                title: action.title
+            }
+        default: 
+            throw new Error('Should never get there!');
+    }
+}
+
 const VideosContextProvider = props => {
+    const [ videosState, dispatch ] = useReducer(videosReducer, initialState);
 
-    const [ videosArr, setVideos ] = useState([]);
-    const [ videoId, setVideoId ] = useState('');
-    const [ title, setTitle ] = useState('');
-
-    const videosHandler = arr => {
-        setVideos(arr);
+    const fetchingStart = () => {
+        dispatch({
+            type: 'FETCHING_START'
+        });
     }
-    const getIdHandler = id => {
-        setVideoId(id);
+    const fetchingFailed = error => {
+        dispatch({
+            type: 'FETCHING_FAILED',
+            error: error
+        });
     }
-    const getTitleHandler = title => {
-        setTitle(title);
+    const fetchingSuccess = videos => {
+        dispatch({
+            type: 'FETCHING_SUCCESS',
+            videos: videos
+        });
+    }
+    const getVideoDetails = (id, title) => {
+        dispatch({
+            type: 'GET_VIDEO_DETAILS',
+             id: id,
+             title: title
+        });
     }
     return (
         <VideosContext.Provider value={{ 
-            setVideos: videosHandler, 
-            videos: videosArr,
-            setId: getIdHandler,
-            id: videoId,
-            title: title,
-            setTitle: getTitleHandler
+            fetchingStart: fetchingStart,
+            fetchingFailed: fetchingFailed,
+            fetchingSuccess: fetchingSuccess, 
+            videos: videosState.videos,
+            getVideoDetails: getVideoDetails,
+            id: videosState.id,
+            title: videosState.title,
+            loading: videosState.loading,
+            error: videosState.error
          }}>
             {props.children}
         </VideosContext.Provider>

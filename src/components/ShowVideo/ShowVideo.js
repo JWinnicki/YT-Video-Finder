@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext/* , useEffect */ } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import './ShowVideo.scss';
@@ -9,9 +9,9 @@ import { VideosContext } from '../../context/videos-context';
 const ShowVideo = React.memo(props => {
     const videosContext = useContext(VideosContext);
 
-    useEffect(() => {
+    /* useEffect(() => {
         console.log('RENDERING SHOW');
-    })
+    }) */
 
     const renderComponent = () => {
         if(videosContext.id === null) {

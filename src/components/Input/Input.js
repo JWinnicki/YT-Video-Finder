@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useCallback } from 'react';
+import React, { useState, useContext,/*  useEffect, */ useCallback } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import Icon from '../Icon/Icon';
@@ -10,30 +10,37 @@ import { VideosContext } from '../../context/videos-context';
 
 const Input = React.memo(props => {
     const [ term, setTerm ] = useState('');
-    const { setVideos } = useContext(VideosContext);
+    const { fetchingStart, fetchingFailed, fetchingSuccess } = useContext(VideosContext);
     const { location, history } = props;
 
 
-    useEffect(() => {
+    /* useEffect(() => {
         console.log('RENDERING INPUT');
-    })
+    }) */
 
     const onFetchVideos = useCallback(async () => {
-        const response = await youtube.get('/search',{
-            params: {
-                q: term,
-                key: KEY,
-                part: 'snippet',
-                maxResults: 5,
-                type: 'video'
-            }
-        });
-        //console.log(response.data.items);
-        setVideos(response.data.items);
+        fetchingStart();
+        try {
+            const response = await youtube.get('/search',{
+                params: {
+                    q: term,
+                    key: KEY,
+                    part: 'snippet',
+                    maxResults: 5,
+                    type: 'video'
+                }
+            });
+            //setVideos(response.data.items);
+            fetchingSuccess(response.data.items);
+        } catch (error) {
+            console.log(error.message);
+            fetchingFailed(error.message);
+        }
+        
         if(location.pathname !== '/' ) {
             history.push('/');
         }
-    }, [history, location, setVideos, term]);
+    }, [history, location, term, fetchingStart, fetchingSuccess, fetchingFailed]);
 
     const onSubmitHandler = useCallback(e => {
         e.preventDefault();

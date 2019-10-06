@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext/* , useEffect */ } from 'react';
 
 import './VideosList.scss';
 import VideoItem from '../VideoItem/VideoItem';
@@ -10,9 +10,9 @@ const VideosList = React.memo(props => {
     const videosList = videosContext.videos;
     const filteredList = videosList.filter(el => el.id.videoId !== videosContext.id)
     
-    useEffect(() => {
+    /* useEffect(() => {
         console.log('RENDERING LIST');
-    })
+    }) */
 
     const renderItems = () => {
         //console.log(filteredList);
