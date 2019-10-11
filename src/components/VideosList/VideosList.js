@@ -16,7 +16,7 @@ const VideosList = React.memo(props => {
 
     const renderItems = () => {
         
-        if(filteredList.length > 0 && !videosContext.error && !videosContext.loading) {
+        if(filteredList.length > 0) {
             return filteredList.map(el => {
                 return <VideoItem key={el.id.videoId} id={el.id.videoId} title={el.snippet.title} url={el.snippet.thumbnails.default.url} />
             });
