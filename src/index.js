@@ -4,15 +4,27 @@ import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { HashRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
 
 import VideosContextProvider from './context/videos-context';
+import reducers from './store/reducers/videosReducer';
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(
+    reducers,
+    composeEnhancers(applyMiddleware(thunk))
+);
 
 const app = (
-    <VideosContextProvider>
-        <HashRouter>
-            <App />
-        </HashRouter>
-    </VideosContextProvider>
+    <Provider store={store}>
+        <VideosContextProvider>
+            <HashRouter>
+                <App />
+            </HashRouter>
+        </VideosContextProvider>
+    </Provider>
 );
 
 ReactDOM.render(app, document.getElementById('root'));

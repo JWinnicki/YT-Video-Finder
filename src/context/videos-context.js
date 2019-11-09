@@ -77,8 +77,8 @@ const VideosContextProvider = props => {
     const getVideoDetails = (id, title) => {
         dispatch({
             type: 'GET_VIDEO_DETAILS',
-             id: id,
-             title: title
+            id: id,
+            title: title
         });
     }
     return (
