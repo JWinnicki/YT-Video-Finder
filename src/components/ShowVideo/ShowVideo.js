@@ -1,20 +1,14 @@
-import React, { useContext/* , useEffect */ } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import './ShowVideo.scss';
 import VideosList from '../VideosList/VideosList';
-import { VideosContext } from '../../context/videos-context';
 
 
 const ShowVideo = React.memo(props => {
-    const videosContext = useContext(VideosContext);
-
-    /* useEffect(() => {
-        console.log('RENDERING SHOW');
-    }) */
-
     const renderComponent = () => {
-        if(videosContext.id === null) {
+        if(props.id === null) {
             return <Redirect to='/' />
         } else {
             return(
@@ -22,13 +16,13 @@ const ShowVideo = React.memo(props => {
                     <div className='ShowVideo-videoDiv'>
                         <div className='ShowVideo-iframeDiv'>
                             <iframe 
-                                src={`https://www.youtube.com/embed/${videosContext.id}`}
+                                src={`https://www.youtube.com/embed/${props.id}`}
                                 title='video player'
                                 allowFullScreen
                                 className='ShowVideo-iframe'
                             />
                         </div>
-                        <h2 className='ShowVideo-videoTitle'>{videosContext.title}</h2>
+                        <h2 className='ShowVideo-videoTitle'>{props.title}</h2>
                     </div>
                     <div className='ShowVideo-listDiv'>
                         <VideosList />
@@ -45,4 +39,11 @@ const ShowVideo = React.memo(props => {
     );
 });
 
-export default ShowVideo;
+const mapStateToProps = state => {
+    return {
+        id: state.id,
+        title: state.title
+    }
+}
+
+export default connect(mapStateToProps)(ShowVideo);

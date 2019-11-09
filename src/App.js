@@ -1,21 +1,20 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import './App.scss';
 import Input from './components/Input/Input';
 import VideosList from './components/VideosList/VideosList';
 import ShowVideo from './components/ShowVideo/ShowVideo';
-import { VideosContext } from './context/videos-context';
 
-const App = () => {
-  const { videos, error } = useContext(VideosContext);
+const App = props => {
 
   return (
     <div className="App">
-      <div className={`App-searchBar ${videos.length > 0 || error ? `App-searchBar--active` : ``}`}>
+      <div className={`App-searchBar ${props.videos.length > 0 || props.error ? `App-searchBar--active` : ``}`}>
         <Input />
       </div>
-      <div className={`App-container ${videos.length > 0 || error ? `App-container--active` : ``}`}>
+      <div className={`App-container ${props.videos.length > 0 || props.error ? `App-container--active` : ``}`}>
         <Switch>
           <Route path={`/show/:id`} component={ShowVideo} />
           <Route path="/" exact component={VideosList} />
@@ -25,4 +24,12 @@ const App = () => {
   );
 }
 
-export default App;
+
+const mapStateToProps = state => {
+  return {
+    videos: state.videos,
+    error: state.error
+  }
+}
+
+export default connect(mapStateToProps)(App);

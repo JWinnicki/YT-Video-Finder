@@ -1,24 +1,16 @@
-import React, { useContext/* , useEffect */ } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 
 import './VideoItem.scss';
-import { VideosContext } from '../../context/videos-context';
+import { getVideoDetails } from '../../store/actions/videos';
 
 const VideoItem = props => {
-    const { getVideoDetails } = useContext(VideosContext);
-
-    /* const getDetailsHandler = (id, title) => {
-        videosContext.setId(id);
-        videosContext.setTitle(title);
-    } */
-
-    /* useEffect(() => {
-        console.log('RENDERING ITEM');
-    }); */
 
     return (
         <li className='VideoItem'>
-            <Link to={`/show/${props.id}`} className='VideoItem-link' onClick={() => getVideoDetails(props.id, props.title)}>
+            <Link to={`/show/${props.id}`} className='VideoItem-link' onClick={() => props.onGetVideoDetails(props.id, props.title)}>
                 <div className='VideoItem-imgDiv'>
                     <img alt={props.title} src={props.url} className='VideoItem-img' />
                 </div>
@@ -30,4 +22,10 @@ const VideoItem = props => {
     );
 }
 
-export default VideoItem;
+const mapDispatchToProps = dispatch => {
+    return {
+        onGetVideoDetails: (id, title) => dispatch(getVideoDetails(id, title))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(VideoItem);
