@@ -7,6 +7,7 @@ import VideosList from '../VideosList/VideosList';
 
 
 const ShowVideo = React.memo(props => {
+
     const renderComponent = () => {
         if(props.id === null) {
             return <Redirect to='/' />

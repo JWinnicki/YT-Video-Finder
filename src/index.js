@@ -8,7 +8,6 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 
-import VideosContextProvider from './context/videos-context';
 import reducers from './store/reducers/videosReducer';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -19,11 +18,9 @@ const store = createStore(
 
 const app = (
     <Provider store={store}>
-        <VideosContextProvider>
             <HashRouter>
                 <App />
             </HashRouter>
-        </VideosContextProvider>
     </Provider>
 );
 
