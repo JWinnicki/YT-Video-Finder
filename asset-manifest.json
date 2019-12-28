@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/YT-Video-Finder/static/css/main.2051e254.chunk.css",
+    "main.js": "/YT-Video-Finder/static/js/main.e9ce0fd6.chunk.js",
+    "main.js.map": "/YT-Video-Finder/static/js/main.e9ce0fd6.chunk.js.map",
+    "runtime-main.js": "/YT-Video-Finder/static/js/runtime-main.96712587.js",
+    "runtime-main.js.map": "/YT-Video-Finder/static/js/runtime-main.96712587.js.map",
+    "static/js/2.d02cf4df.chunk.js": "/YT-Video-Finder/static/js/2.d02cf4df.chunk.js",
+    "static/js/2.d02cf4df.chunk.js.map": "/YT-Video-Finder/static/js/2.d02cf4df.chunk.js.map",
+    "index.html": "/YT-Video-Finder/index.html",
+    "precache-manifest.805317c5c187100b2921687958e7e5f1.js": "/YT-Video-Finder/precache-manifest.805317c5c187100b2921687958e7e5f1.js",
+    "service-worker.js": "/YT-Video-Finder/service-worker.js",
+    "static/css/main.2051e254.chunk.css.map": "/YT-Video-Finder/static/css/main.2051e254.chunk.css.map",
+    "static/media/sprite.svg": "/YT-Video-Finder/static/media/sprite.ac940cce.svg"
+  }
+}
